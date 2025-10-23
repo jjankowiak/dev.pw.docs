@@ -19,7 +19,7 @@ servers:
  # - url: https://api.example3.com
  #   description: New Server 3
 info:
-description: |
+  description: |
     The **Plus Workflow API** allows you to perform essential system operations in an automated way.
 
     To properly use the API, authentication must be performed via the **Authorize** button.  
