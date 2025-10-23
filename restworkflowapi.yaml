@@ -25,7 +25,7 @@ info:
     To properly use the API, authentication must be performed via the **Authorize** button.  
     Make sure the user is **logged out** of the Plus Workflow system before sending requests.
 
-    ## 🧭 Before you start
+    ### 🧭 Before you start
 
     1. Make sure you are working on an **external access** website.
     2. Log out of the Plus Workflow system.
@@ -33,7 +33,7 @@ info:
     4. Log in using credentials matching your Plus Workflow account.
     5. In the **Server Variables** section, enter your domain address.
 
-    ## 🔐 Basic Authentication
+    ### 🔐 Basic Authentication
 
     The API supports **BasicAuth** as the primary authentication mechanism.  
     Each request must include an `Authorization` header containing a Base64-encoded string in the format `username:password`.
@@ -53,7 +53,7 @@ info:
 
     ---
 
-    ## 📦 Request Body Format
+    ### 📦 Request Body Format
 
     Depending on the endpoint, the request body must be sent in one of the following formats:
 
@@ -83,7 +83,7 @@ info:
 
     ---
 
-    ## 🛡️ CSRF Protection in the System
+    ### 🛡️ CSRF Protection in the System
 
     A **CSRF (Cross-Site Request Forgery)** protection mechanism has been introduced in the system.
 
@@ -112,7 +112,7 @@ info:
 
     ---
 
-    ## 📥 Retrieving the CSRF Token
+    ### 📥 Retrieving the CSRF Token
 
     To fetch a CSRF token:
 
@@ -143,7 +143,7 @@ info:
 
     ---
 
-    ## 🔐 Logging In with a CSRF Token
+    ### 🔐 Logging In with a CSRF Token
 
     To log in securely using a CSRF token:
 
@@ -169,7 +169,7 @@ info:
 
     ---
 
-    ## 📤 Sending Authorized Requests
+    ### 📤 Sending Authorized Requests
 
     For any secured operation (e.g., creating or modifying data):
 
