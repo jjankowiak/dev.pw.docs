@@ -193,7 +193,7 @@ info:
 
     ❗ **Important:**  
     If you are not using BasicAuth, a **CSRF token is mandatory** for all data-changing operations.
-  
+
   
   version: 1.0.0
   title: Plus Workflow REST API
