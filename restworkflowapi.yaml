@@ -19,28 +19,39 @@ servers:
  # - url: https://api.example3.com
  #   description: New Server 3
 info:
-  description: | 
-    Plus Workflow system provides a simple API that allows you to perform basic actions in the system<br> In order to properly use the API, the user must authenticate their data via the **Authorize** button. <br> The user must be logged out of their system while sending requests. <br><br> **Before using, follow these steps** <br>1. Make sure you are working on an external access website.<br> 2. Log out of the Plus Workflow system. <br> 3. Click `Authorize` button on the current page. <br> 4. Log in with credentials that match your Plus Workflow login data.  <br>5. In the server variables section, enter your domain address.<br> <br> 
-    
-     ---
-    
+description: |
+    The **Plus Workflow API** allows you to perform essential system operations in an automated way.
+
+    To properly use the API, authentication must be performed via the **Authorize** button.  
+    Make sure the user is **logged out** of the Plus Workflow system before sending requests.
+
+    ### 🧭 Before you start
+
+    1. Make sure you are working on an **external access** website.
+    2. Log out of the Plus Workflow system.
+    3. Click the **Authorize** button on the current page.
+    4. Log in using credentials matching your Plus Workflow account.
+    5. In the **Server Variables** section, enter your domain address.
+
+    ---
+
     ## 🔐 Basic Authentication
 
     The API supports **BasicAuth** as the primary authentication mechanism.  
-    Each request must include an `Authorization` header containing a Base64-encoded string of the username and password.
+    Each request must include an `Authorization` header containing a Base64-encoded string in the format `username:password`.
 
-    **Example header:**
+    **Example header**
     ```
     Authorization: Basic base64(username:password)
     ```
 
-    **Example in practice:**
+    **Example in practice**
     ```
     Authorization: Basic YXBpX3VzZXI6UzNjcmV0IQ==
     ```
+
     ✅ When using **BasicAuth**, no CSRF token is required.  
-    ⚠️ Always send BasicAuth credentials over HTTPS.
-      
+    ⚠️ Always use HTTPS when sending credentials.
 
     ---
 
@@ -48,19 +59,22 @@ info:
 
     Depending on the endpoint, the request body must be sent in one of the following formats:
 
-    - **application/json** — for most API operations. Example:
+    - **application/json** — used for most API operations  
+      Example:
       ```json
       {
         "clientId": "string",
         "tenantId": "string"
       }
       ```
-    - **application/x-www-form-urlencoded** — used only for endpoints explicitly marked as such.Example:
+
+    - **application/x-www-form-urlencoded** — used only for endpoints explicitly marked as such  
+      Example:
       ```
       clientId=string&tenantId=string
       ```
 
-    Always specify the `Content-Type` header corresponding to the body format used:
+    Always include the appropriate `Content-Type` header:
     ```
     Content-Type: application/json
     ```
@@ -68,45 +82,47 @@ info:
     ```
     Content-Type: application/x-www-form-urlencoded
     ```
-    <br>
-    
+
     ---
-   
-    
-    ## 🔐 CSRF Protection in the System
-    A **CSRF** (Cross-Site Request Forgery) protection mechanism has been introduced in the system.
-    <br><br>
+
+    ## 🛡️ CSRF Protection in the System
+
+    A **CSRF (Cross-Site Request Forgery)** protection mechanism has been introduced in the system.
+
     ### What does it mean?
-    All HTTP requests that **modify data** (e.g. `POST`, `PUT`, `PATCH`, `DELETE`) **must include a valid CSRF token**
-    — unless they are authenticated using **BasicAuth**.
-    <br><br>
+
+    All HTTP requests that **modify data** (e.g. `POST`, `PUT`, `PATCH`, `DELETE`) **must include a valid CSRF token**,  
+    unless the request is authenticated using **BasicAuth**.
+
     ### 🔑 Authentication Behavior
 
-    • **BasicAuth**
-      - Still fully supported and **recommended**.
-      - CSRF token is **not required** when using BasicAuth.
+    **BasicAuth**
+    - Fully supported and recommended.
+    - CSRF token is **not required**.
 
-    • **Other Authentication Methods**
-      - CSRF token **is required** in all data-changing requests.
-      - Failure to include a valid token will result in a `403 Forbidden`.<br><br>
+    **Other Authentication Methods**
+    - CSRF token **is required** for all data-changing requests.
+    - Missing or invalid token will result in `403 Forbidden`.
+
     ### ⚙️ System Configuration
 
-    If you do not use BasicAuth and encounter issues with CSRF validation,
-    you can **temporarily disable** the protection mechanism using:
-
+    If you are not using BasicAuth and encounter CSRF validation issues,  
+    you can temporarily disable protection via configuration:
     ```
     CsrfProtectionEnabled = false
     ```
-    <br>
+
+    ---
+
     ## 📥 Retrieving the CSRF Token
 
-    To fetch a CSRF token, call the endpoint:
+    To fetch a CSRF token:
 
     ```
     GET /api/csrf/token
     ```
 
-    #### Example Response:
+    **Example response**
     ```json
     {
       "token": "jFWCjzaBHP8rEFnckuWRIkZaeVajGDxptEXh4T4b0giel3RRumbj61OzfsgGImjuoMilE3FjVDSUIAxE13GEgFwrsaAr80Fn",
@@ -116,47 +132,48 @@ info:
     ```
 
     Additionally, the server returns a cookie:
-
     ```
     Set-Cookie: session1
     ```
 
-    > This represents the user's initial session and must be stored along with the CSRF token.
+    This represents the user's initial session and must be stored along with the CSRF token.
 
-    ### ✅ What to store:
+    **Store the following:**
     - `session1` cookie (from `Set-Cookie`)
     - CSRF token value (`token`)
-    - Header name (usually `X-CSRF-TOKEN`)<br><br>
-    
-    ## 🔐 Logging In with CSRF Token
+    - Header name (usually `X-CSRF-TOKEN`)
 
-    To log in securely using CSRF token:
+    ---
+
+    ## 🔐 Logging In with a CSRF Token
+
+    To log in securely using a CSRF token:
 
     ```
     POST /api/authentication/login
     ```
 
-    #### Required:
-
-    **Headers**
+    **Required headers**
     ```
     X-CSRF-TOKEN: <token1>
     ```
 
-    **Cookies**
+    **Required cookies**
     ```
     session1
     ```
 
-    #### Server Response:
+    **Server response**
     - New session cookie: `Set-Cookie: session2`
     - New CSRF token: `token2`
 
-    > Use `token2` and `session2` for all authorized requests after login.
+    Use `token2` and `session2` for all authorized requests after login.
+
+    ---
 
     ## 📤 Sending Authorized Requests
 
-    For any secured operation (e.g. creating or modifying data), send:
+    For any secured operation (e.g., creating or modifying data):
 
     ```
     POST /api/...
@@ -173,7 +190,9 @@ info:
     ```
 
     ---
-    ❗ Remember: If you’re not using BasicAuth, **CSRF token is mandatory** for all data-changing operations.
+
+    ❗ **Important:**  
+    If you are not using BasicAuth, a **CSRF token is mandatory** for all data-changing operations.
   
   
   version: 1.0.0
