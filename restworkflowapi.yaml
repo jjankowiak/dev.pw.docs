@@ -25,7 +25,7 @@ info:
     To properly use the API, authentication must be performed via the **Authorize** button.  
     Make sure the user is **logged out** of the Plus Workflow system before sending requests.
 
-    ### 🧭 Before you start
+    ## 🧭 Before you start
 
     1. Make sure you are working on an **external access** website.
     2. Log out of the Plus Workflow system.
