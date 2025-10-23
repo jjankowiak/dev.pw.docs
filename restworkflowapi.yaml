@@ -21,9 +21,7 @@ servers:
 info:
   description: | 
     Plus Workflow system provides a simple API that allows you to perform basic actions in the system<br> In order to properly use the API, the user must authenticate their data via the **Authorize** button. <br> The user must be logged out of their system while sending requests. <br><br> **Before using, follow these steps** <br>1. Make sure you are working on an external access website.<br> 2. Log out of the Plus Workflow system. <br> 3. Click `Authorize` button on the current page. <br> 4. Log in with credentials that match your Plus Workflow login data.  <br>5. In the server variables section, enter your domain address.<br> <br> 
-    
      ---
-    
     ## 🔐 Basic Authentication
 
     The API supports **BasicAuth** as the primary authentication mechanism.  
@@ -33,19 +31,14 @@ info:
     ```
     Authorization: Basic base64(username:password)
     ```
-
     **Example in practice:**
     ```
     Authorization: Basic YXBpX3VzZXI6UzNjcmV0IQ==
     ```
     ✅ When using **BasicAuth**, no CSRF token is required.  
     ⚠️ Always send BasicAuth credentials over HTTPS.
-      
-
     ---
-
     ## 📦 Request Body Format
-
     Depending on the endpoint, the request body must be sent in one of the following formats:
 
     - **application/json** — for most API operations. Example:
@@ -59,7 +52,6 @@ info:
       ```
       clientId=string&tenantId=string
       ```
-
     Always specify the `Content-Type` header corresponding to the body format used:
     ```
     Content-Type: application/json
@@ -68,10 +60,7 @@ info:
     ```
     Content-Type: application/x-www-form-urlencoded
     ```
-    <br>
-    
     ---
-   
     
     ## 🔐 CSRF Protection in the System
     A **CSRF** (Cross-Site Request Forgery) protection mechanism has been introduced in the system.
@@ -97,7 +86,6 @@ info:
     ```
     CsrfProtectionEnabled = false
     ```
-    <br>
     ## 📥 Retrieving the CSRF Token
 
     To fetch a CSRF token, call the endpoint:
@@ -105,7 +93,6 @@ info:
     ```
     GET /api/csrf/token
     ```
-
     #### Example Response:
     ```json
     {
@@ -114,19 +101,17 @@ info:
       "parameterName": "_csrf"
     }
     ```
-
     Additionally, the server returns a cookie:
 
     ```
     Set-Cookie: session1
     ```
-
     > This represents the user's initial session and must be stored along with the CSRF token.
 
     ### ✅ What to store:
     - `session1` cookie (from `Set-Cookie`)
     - CSRF token value (`token`)
-    - Header name (usually `X-CSRF-TOKEN`)<br><br>
+    - Header name (usually `X-CSRF-TOKEN`)<br>
     
     ## 🔐 Logging In with CSRF Token
 
@@ -135,7 +120,6 @@ info:
     ```
     POST /api/authentication/login
     ```
-
     #### Required:
 
     **Headers**
@@ -147,7 +131,6 @@ info:
     ```
     session1
     ```
-
     #### Server Response:
     - New session cookie: `Set-Cookie: session2`
     - New CSRF token: `token2`
@@ -161,20 +144,17 @@ info:
     ```
     POST /api/...
     ```
-
     **Headers**
     ```
     X-CSRF-TOKEN: <token2>
     ```
-
     **Cookies**
     ```
     session2
     ```
-
     ---
     ❗ Remember: If you’re not using BasicAuth, **CSRF token is mandatory** for all data-changing operations.
-  
+
   
   version: 1.0.0
   title: Plus Workflow REST API
