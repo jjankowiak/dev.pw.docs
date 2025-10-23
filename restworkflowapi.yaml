@@ -33,8 +33,6 @@ info:
     4. Log in using credentials matching your Plus Workflow account.
     5. In the **Server Variables** section, enter your domain address.
 
-    ---
-
     ## 🔐 Basic Authentication
 
     The API supports **BasicAuth** as the primary authentication mechanism.  
